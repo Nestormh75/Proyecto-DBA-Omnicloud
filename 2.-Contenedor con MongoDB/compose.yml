@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb-container1
+    environment:
+      MONGO_INITDB_DATABASE: db  # Nombre de la base de datos a crear
+      MONGO_INITDB_ROOT_USERNAME: 'root'
+      MONGO_INITDB_ROOT_PASSWORD: 'secret'
+    ports:
+      - "27017:27017"  # Mapea el puerto de MongoDB
+    volumes:
+      - ./data:/data/db  # Persistencia de datos
+      - ./init/init-script.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./data/log:/var/log/mongodb/
+
+volumes:
+  mongo_data:
